@@ -9,14 +9,12 @@ import {
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { NavigationContainer } from "@react-navigation/native";
-import { VictoryBar, VictoryChart, VictoryTheme } from "victory-native";
-
-const data = [
-  { quarter: 1, earnings: 13000 },
-  { quarter: 2, earnings: 16500 },
-  { quarter: 3, earnings: 14250 },
-  { quarter: 4, earnings: 19000 },
-];
+import {
+  VictoryBar,
+  VictoryChart,
+  VictoryTheme,
+  VictoryLine,
+} from "victory-native";
 
 function Home() {
   const [text, setText] = useState("before call");
@@ -25,9 +23,21 @@ function Home() {
   return (
     <>
       <View style={styles.container}>
-        <View style={{ paddingTop: 50, justifyContent: "space-evenly" }}>
-          <VictoryChart width={350} theme={VictoryTheme.material}>
-            <VictoryBar data={data} x="quarter" y="earnings" />
+        <View style={{ paddingTop: 25, justifyContent: "space-evenly" }}>
+          <VictoryChart
+            width={350}
+            minDomain={{ x: 1, y: 0 }}
+            maxDomain={{ x: 5, y: 35 }}
+          >
+            <VictoryLine
+              data={[
+                { x: 1, y: 5 },
+                { x: 2, y: 5.1 },
+                { x: 3, y: 4.9 },
+                { x: 4, y: 4.9 },
+                { x: 5, y: 5.1 },
+              ]}
+            />
           </VictoryChart>
           <KeyboardAwareScrollView>
             <TextInput
