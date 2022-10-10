@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Slider from "@react-native-community/slider";
 import { NavigationContainer } from "@react-navigation/native";
 import {
   VictoryBar,
@@ -15,15 +16,37 @@ import {
   VictoryTheme,
   VictoryLine,
 } from "victory-native";
+import io from "socket.io-client";
+import Toast from "react-native-toast-message";
+
+const connectionSuccessful = () => {
+  Toast.show({
+    type: "success",
+    text1: "Connection Successful",
+    text2: "Ready to set output voltage⚡",
+  });
+};
+
+const socket = io("http://172.23.75.88:3000");
 
 function Home() {
-  const [text, setText] = useState("before call");
-  const [desiredVoltage, setDesiredVoltage] = useState("0");
+  const [desiredVoltage, setDesiredVoltage] = useState(0);
+
+  useEffect(() => {
+    if (socket.id) {
+      connectionSuccessful();
+    }
+  }, []);
 
   return (
     <>
       <View style={styles.container}>
-        <View style={{ paddingTop: 25, justifyContent: "space-evenly" }}>
+        <View
+          style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
+        >
+          <Text style={{ fontSize: 36, fontWeight: "bold" }}>
+            {desiredVoltage == 0 ? "" : `${desiredVoltage}V`}
+          </Text>
           <VictoryChart
             width={350}
             minDomain={{ x: 1, y: 0 }}
@@ -39,24 +62,32 @@ function Home() {
               ]}
             />
           </VictoryChart>
-          <KeyboardAwareScrollView>
-            <TextInput
+
+          {/* <TextInput
               style={styles.input}
               onChangeText={(t) => setDesiredVoltage(t)}
               placeholder="desired mV"
               textAlign="center"
               keyboardType="numeric"
               maxLength={5}
-            />
-            <Button
-              onPress={() =>
-                console.log(`desired voltage is: ${desiredVoltage}`)
-              }
-              title="Set Voltage ⚡"
-              color="#841584"
-              accessibilityLabel="Learn more about this purple button"
-            />
-          </KeyboardAwareScrollView>
+            /> */}
+
+          <Slider
+            style={{ width: 300, height: 40 }}
+            minimumValue={0}
+            onValueChange={(value) => setDesiredVoltage(value)}
+            step={1}
+            maximumValue={30}
+            minimumTrackTintColor="green"
+            maximumTrackTintColor="#000000"
+          />
+          <Button
+            onPress={() => {
+              console.log("pressed");
+            }}
+            title="Set Voltage ⚡"
+            color="#841584"
+          />
         </View>
       </View>
     </>
