@@ -42,7 +42,11 @@ function Home() {
     <>
       <View style={styles.container}>
         <View
-          style={{ alignItems: "center", justifyContent: "center", flex: 1 }}
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            paddingBottom: 50,
+          }}
         >
           <Text style={{ fontSize: 36, fontWeight: "bold" }}>
             {desiredVoltage == 0 ? "" : `${desiredVoltage}V`}
@@ -73,7 +77,7 @@ function Home() {
             /> */}
 
           <Slider
-            style={{ width: 300, height: 40 }}
+            style={{ width: 350, height: 40 }}
             minimumValue={0}
             onValueChange={(value) => setDesiredVoltage(value)}
             step={1}
