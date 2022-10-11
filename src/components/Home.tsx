@@ -10,14 +10,11 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import Slider from "@react-native-community/slider";
 import { NavigationContainer } from "@react-navigation/native";
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryTheme,
-  VictoryLine,
-} from "victory-native";
+import { VictoryChart, VictoryLine } from "victory-native";
 import io from "socket.io-client";
 import Toast from "react-native-toast-message";
+import { SafeAreaView } from "react-native-safe-area-context";
+import axios from "axios";
 
 const connectionSuccessful = () => {
   Toast.show({
@@ -27,34 +24,38 @@ const connectionSuccessful = () => {
   });
 };
 
+function handleSetVoltage(desiredVoltage: number) {
+  axios.post("http://localhost:3000/voltage", { voltage: desiredVoltage });
+}
+
+const voltage = new Uint8Array([100]);
+
 const socket = io("http://172.23.75.88:3000");
 
 function Home() {
   const [desiredVoltage, setDesiredVoltage] = useState(0);
 
   useEffect(() => {
-    if (socket.id) {
-      connectionSuccessful();
-    }
+    connectionSuccessful();
   }, []);
 
   return (
     <>
       <View style={styles.container}>
+        <Text style={{ fontSize: 36, fontWeight: "bold" }}>
+          {desiredVoltage == 0 ? "Select output voltage" : `${desiredVoltage}V`}
+        </Text>
         <View
           style={{
             alignItems: "center",
             justifyContent: "center",
-            paddingBottom: 50,
+            paddingBottom: 80,
           }}
         >
-          <Text style={{ fontSize: 36, fontWeight: "bold" }}>
-            {desiredVoltage == 0 ? "" : `${desiredVoltage}V`}
-          </Text>
           <VictoryChart
             width={350}
             minDomain={{ x: 1, y: 0 }}
-            maxDomain={{ x: 5, y: 35 }}
+            maxDomain={{ x: 5, y: 35 / 2 }}
           >
             <VictoryLine
               data={[
@@ -78,16 +79,17 @@ function Home() {
 
           <Slider
             style={{ width: 350, height: 40 }}
-            minimumValue={0}
+            minimumValue={5}
             onValueChange={(value) => setDesiredVoltage(value)}
             step={1}
             maximumValue={30}
             minimumTrackTintColor="green"
-            maximumTrackTintColor="#000000"
+            maximumTrackTintColor="#D3D3D3"
           />
           <Button
             onPress={() => {
               console.log("pressed");
+              handleSetVoltage(desiredVoltage);
             }}
             title="Set Voltage ⚡"
             color="#841584"

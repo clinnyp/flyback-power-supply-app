@@ -6,6 +6,7 @@ import {
   Button,
   TextInput,
   KeyboardAvoidingView,
+  SafeAreaView,
 } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -21,7 +22,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Flyback Power-Supply" component={Home} />
+        <Stack.Screen name="Flyback Power-Supply 🔌" component={Home} />
       </Stack.Navigator>
       <Toast />
     </NavigationContainer>
