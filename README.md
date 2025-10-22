@@ -9,7 +9,8 @@ flyback converter.
 ## Demo
 
 <p align="center">
-  <img src="iot-flyback-controller-demo.gif" alt="IoT Flyback Controller Demo">
+  <video src="iot-flyback-controller-demo.webm" autoplay loop muted playsinline>
+  </video>
 </p>
 <p align="center"><i>Mobile control of variable voltage output (0-30V)</i></p>
 
