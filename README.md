@@ -6,16 +6,12 @@ with 0.2V resolution (150 discrete steps). The system uses a mobile app to send 
 commands through a Node.js server to an ATmega328P microcontroller that drives the 
 flyback converter.
 
-## Demo
-
+## IoT Flyback Controller Demo
 <p align="center">
-  <video 
-    src="https://stream.mux.com/NPx01XtvtBcvcI008UAvBVlkI1uOCzAWHcotaRuqUdFAU.mp4" 
-    controls 
-    loop 
-    muted
-    poster="https://image.mux.com/NPx01XtvtBcvcI008UAvBVlkI1uOCzAWHcotaRuqUdFAU/thumbnail.jpg">
-  </video>
+  <img 
+    src="mobile/assets/iot-flyback-controller-demo.gif" 
+    alt="IoT Flyback Controller Demo"
+    width="800">
 </p>
 <p align="center"><i>Mobile control of variable voltage output (0-30V)</i></p>
 
@@ -24,7 +20,6 @@ flyback converter.
 ### 📱 Mobile App (React Native)
 - Cross-platform mobile interface
 - Real-time voltage input and control
-- Toast notifications for user feedback
 - Communicates via HTTP to middleware server 
 
 ### 🖥️ Server (Node.js/Express)
