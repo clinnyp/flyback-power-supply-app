@@ -1,8 +1,6 @@
-import { Request, Response } from "express";
-const express = require("express");
-const bodyParser = require("body-parser");
-const { SerialPort } = require("serialport");
-const Readline = require("@serialport/parser-readline");
+import express from "express";
+import bodyParser from "body-parser";
+import { SerialPort } from "serialport";
 
 const app = express();
 const expressPort = 3000;
@@ -14,12 +12,6 @@ const server = app.listen(expressPort, () => {
   console.log(`Listening on port ${expressPort}`);
 });
 
-// SOCKET IO
-const io = require("socket.io")(server);
-io.on("connection", (socket) => {
-  console.log("connection works!!" + socket.id);
-});
-
 //MAC
 // REMINDER: ls /dev/tty.*
 const port = new SerialPort({ path: "/dev/tty.usbmodem14402", baudRate: 9600 });
@@ -28,7 +20,7 @@ const port = new SerialPort({ path: "/dev/tty.usbmodem14402", baudRate: 9600 });
 //const port = new SerialPort({ path: "COM3", baudRate: 9600 });
 
 // send desired voltage
-app.post("/voltage", (req: Request, res: Response) => {
+app.post("/voltage", (req, res) => {
   const desiredVoltage = req.body.voltage;
   const normalizedVoltage = desiredVoltage / 0.2;
 
